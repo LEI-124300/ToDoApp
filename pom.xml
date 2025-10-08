@@ -53,6 +53,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--  Ahmad's new feature: Currency conversion -->
+        <dependency>
+            <groupId>org.javamoney.moneta</groupId>
+            <artifactId>moneta-convert</artifactId>
+            <version>1.4.2</version>
+        </dependency>
     </dependencies>
     
     <build>
