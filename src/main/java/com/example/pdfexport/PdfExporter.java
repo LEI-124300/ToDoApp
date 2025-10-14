@@ -14,18 +14,19 @@ import java.util.stream.Collectors;
 
 /**
  * Classe utilitária para gerar PDFs com iText7 (kernel + layout).
- * Versão final sem exceções desnecessárias.
+ * Usa ByteArrayOutputStream para criar o ficheiro em memória.
  */
 public class PdfExporter {
 
     /**
-     * Gera um PDF em memória com a lista de tarefas.
+     * Gera um PDF em memória com uma lista de tarefas.
      *
      * @param title título do documento
      * @param lines texto com as tarefas (uma por linha)
      * @return bytes do ficheiro PDF
      */
     public byte[] generateTodoPdf(String title, String lines) {
+
         // separar as tarefas por linha e limpar vazios
         java.util.List<String> items = Arrays.stream(lines.split("\\R"))
                 .map(s -> new String(s.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8))
@@ -35,13 +36,14 @@ public class PdfExporter {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        // Criar o PDF (sem try-with-resources, mas com fecho manual)
         PdfWriter writer = new PdfWriter(baos);
         PdfDocument pdf = new PdfDocument(writer);
         Document doc = new Document(pdf);
 
+        // título
         doc.add(new Paragraph(title).setBold().setFontSize(18));
 
+        // lista de tarefas
         if (items.isEmpty()) {
             doc.add(new Paragraph("Sem tarefas para exportar."));
         } else {
@@ -52,7 +54,8 @@ public class PdfExporter {
             doc.add(list);
         }
 
-        doc.close(); // fecha o documento e grava o PDF
+        // fechar e devolver bytes
+        doc.close();
         return baos.toByteArray();
     }
 }

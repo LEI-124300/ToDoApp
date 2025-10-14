@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
  * Acede em: http://localhost:8080/pdf-export
  */
 @PageTitle("Exportação em PDF")
-@Route("pdf-export") // se tiveres um MainLayout, podes trocar para: @Route(value = "pdf-export", layout = MainLayout.class)
+@Route("pdf-export") // podes trocar para: @Route(value = "pdf-export", layout = MainLayout.class)
 public class PdfExportView extends VerticalLayout {
 
     private final PdfExporter exporter = new PdfExporter();
@@ -45,21 +45,21 @@ public class PdfExportView extends VerticalLayout {
             String ts = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
             String filename = "todo-list-" + ts + ".pdf";
 
-            StreamResource resource = new StreamResource(
-                    filename,
-                    () -> new ByteArrayInputStream(pdfBytes)
-            );
+            // criar recurso PDF
+            StreamResource resource = new StreamResource(filename,
+                    () -> new ByteArrayInputStream(pdfBytes));
+            resource.setContentType("application/pdf");
 
-            // Forçar download
-            Anchor download = new Anchor(resource, "Descarregar PDF");
+            // criar link de download visível
+            Anchor download = new Anchor(resource, "Clique aqui para descarregar o PDF");
             download.getElement().setAttribute("download", true);
+            download.getStyle().set("margin-top", "10px");
 
-            // adicionar temporariamente ao UI e clicar programaticamente
+            // adicionar o link ao layout
             add(download);
-            download.getElement().callJsFunction("click");
-            download.getElement().removeFromParent();
 
-            Notification.show("PDF gerado com sucesso.", 3000, Notification.Position.MIDDLE);
+            Notification.show("PDF gerado com sucesso. Clique no link para descarregar.",
+                    4000, Notification.Position.MIDDLE);
         });
 
         Button goHome = new Button("Voltar à Home", evt -> UI.getCurrent().navigate(""));
