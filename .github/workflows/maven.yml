@@ -29,7 +29,8 @@ jobs:
 
       # (5)
       - name: Copy JAR to repository root
-        run: cp target/*.jar .
+        run: cp target/*.jar .
+
         
       # (d) 
       - name: Upload JAR artifact
