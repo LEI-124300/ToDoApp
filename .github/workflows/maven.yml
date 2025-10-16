@@ -27,8 +27,10 @@ jobs:
       - name: Build with Maven
         run: mvn -B clean package --file pom.xml
 
-      # 5 
-     
+      # (5)
+      - name: Copy JAR to repository root
+        run: cp target/*.jar .
+        
       # (d) 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
