@@ -1,6 +1,50 @@
 # App README
 
-- [ ] TODO Replace or update this README with instructions relevant to your application
+# ToDoApp
+
+Demonstração do Projeto – YouTube:https://m.youtube.com/watch?v=KQEos5EoAgo#
+
+## Descrição
+Aplicação web ToDo desenvolvida com Vaadin e Spring Boot como parte do trabalho prático de Engenharia de Software.
+
+## Funcionalidades que adicionamos 
+- Conversão de moedas 
+- Geração de ficheiro PDF 
+- Geração de QR code 
+
+## Automatização com GitHub Actions
+
+Este projeto utiliza uma *pipeline* de **Integração Contínua (CI)** configurada com o **GitHub Actions**
+para automatizar a criação do ficheiro `.jar` da aplicação **ToDoApp**.
+
+O workflow é executado automaticamente sempre que há um *push* para a branch `main` e realiza as seguintes etapas:
+
+1. **Checkout do código** — (`actions/checkout@v4`)
+2. **Configuração do ambiente Java 21** — (`actions/setup-java@v4`)
+3. **Build Maven** — (`mvn clean package`)
+4. **Publicação do artefacto** — (`actions/upload-artifact@v4`)
+5. **Cópia do ficheiro `.jar` para a raiz do repositório**
+
+### 🧩 Excerto do ficheiro `.github/workflows/build.yml`
+```yaml
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - run: mvn clean package --file pom.xml
+      - run: cp target/*.jar .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ToDoApp-jar
+          path: target/*.jar
 
 ## Project Structure
 
