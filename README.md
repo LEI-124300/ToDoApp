@@ -2,7 +2,7 @@
 
 # ToDoApp
 
-Demonstração do Projeto – YouTube:https://m.youtube.com/watch?v=KQEos5EoAgo#
+Demonstração do Projeto – YouTube: https://m.youtube.com/watch?v=KQEos5EoAgo#
 
 ## Descrição
 Aplicação web ToDo desenvolvida com Vaadin e Spring Boot como parte do trabalho prático de Engenharia de Software.
